@@ -1,0 +1,184 @@
+--  1-masala
+
+-- drop table if exists school;
+-- drop table if exists maktab;
+-- drop table if exists new_maktab;
+
+-- create table school(
+-- 	id serial primary key,
+-- 	name text,
+-- 	address text,
+-- 	phone_number char(13),
+-- 	davlat_maktabi bool,
+-- 	sana date
+-- );
+-- insert into school(name,address,phone_number,davlat_maktabi,sana) values
+-- ('39-maktab','guliston Qish','+998770078771','True','2024-11-08'),
+-- ('29-maktab','Zigir Qish','+998777654321','True','11-11-2024'),
+-- ('19-maktab','palohon Qish','+998771234567','True','2024-11-10');
+
+-- select sana, to_char(sana,'dd.mm.yyyy')as formatted_sana from school;
+
+
+
+-- alter table school
+-- rename to maktab;
+
+-- alter table maktab
+-- rename to new_maktab;
+
+-- alter table new_maktab 
+-- rename column name to ism;
+
+-- alter table new_maktab
+-- rename column address to turar_joy;
+
+-- alter table new_maktab 
+-- rename column phone_number to tel_raqam;
+
+-- alter table new_maktab
+-- add column if not exists tuman text;
+
+-- alter table new_maktab
+-- add column if not exists oquvchi_soni integer;
+
+-- alter table new_maktab
+-- drop column if exists turar_joy;
+
+-- update new_maktab set ism='1-maktab' where id = 1;
+-- update new_maktab set ism ='10-maktab' where id = 3;
+-- update new_maktab set ism ='20-maktab' where id = 2;
+-- update new_maktab set oquvchi_soni='1000' where id =1;
+
+-- delete from new_maktab where id =2;
+-- delete from new_maktab where id =3;
+-- delete from new_maktab where ism = '30-maltab';
+-- delete from new_maktab where davlat_maktabi = 'false';
+
+-- select * from new_maktab;
+-- ==================================================================================================================================================
+--  1-masala
+
+drop table if exists school;
+drop table if exists maktab;
+drop table if exists new_maktab;
+drop table if exists teacher;
+drop table if exists student;
+drop table if exists class;
+drop table if exists subject;
+drop table if exists enrollment,
+drop table if exists grade;
+drop table if exists attendance;
+
+create table school(
+	id serial primary key,
+	name text,
+	address text,
+	phone_number char(13),
+	davlat_maktabi bool,
+	sana date
+);
+create table if not exists teacher(
+	id serial primary key,
+	first_name text,
+	last_name text,
+	email text,
+	phone_number char(13),
+	school_id integer references school(id)
+);
+create table if not exists student(
+	id serial primary key,
+	first_name text,
+	last_name text,
+	date_of_birth date,
+	gender integer,
+	school_id integer references school(id)
+);
+create table if not exists class(
+	id serial primary key,
+	name text,
+	teacher_id integer references teacher(id),
+	school_id integer references school(id)
+);
+create table if not exists subject(
+	id serial primary key,
+	name text,
+	class_id integer references school(id),
+	teacher_id integer references teacher(id)
+);
+create table if not exists enrollment(
+	id serial primary key,
+	student_id integer references student(id),
+	class_id integer references school(id),
+	enrollment date default current_date
+);
+create table if not exists grade(
+	id serial primary key,
+	student_id integer references student(id),
+	subject_id integer references subject(id),
+	grade_value integer,
+	date_given date
+);
+create table if not exists attendance(
+	id serial primary key,
+	student_id integer references student(id),
+	class_id integer references school(id),
+	date ----------------------
+);
+
+
+
+
+insert into school(name,address,phone_number,davlat_maktabi,sana) values
+('39-maktab','guliston Qish','+998770078771','True','2024-11-08'),
+('29-maktab','Zigir Qish','+998777654321','True','11-11-2024'),
+('19-maktab','palohon Qish','+998771234567','True','2024-11-10');
+
+select sana, to_char(sana,'dd.mm.yyyy')as formatted_sana from school;
+
+
+
+alter table school
+rename to maktab;
+
+alter table maktab
+rename to new_maktab;
+
+alter table new_maktab 
+rename column name to ism;
+
+alter table new_maktab
+rename column address to turar_joy;
+
+alter table new_maktab 
+rename column phone_number to tel_raqam;
+
+alter table new_maktab
+add column if not exists tuman text;
+
+alter table new_maktab
+add column if not exists oquvchi_soni integer;
+
+alter table new_maktab
+drop column if exists turar_joy;
+
+update new_maktab set ism='1-maktab' where id = 1;
+update new_maktab set ism ='10-maktab' where id = 3;
+update new_maktab set ism ='20-maktab' where id = 2;
+update new_maktab set oquvchi_soni='1000' where id =1;
+
+delete from new_maktab where id =2;
+delete from new_maktab where id =3;
+delete from new_maktab where ism = '30-maltab';
+delete from new_maktab where davlat_maktabi = 'false';
+
+select * from new_maktab;
+select * from school;
+select * from teacher;
+select * from student;
+select * from class;
+select * from subject;
+select * from enrollment;
+select * from grade;
+select * from attendance;
+
